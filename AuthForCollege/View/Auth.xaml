@@ -62,7 +62,7 @@
                 <Button Style="{StaticResource StyleButtonSmall}"
                         Template="{StaticResource ButtonTemplate}"
                         Grid.Column="1"
-                        Click="CreateAccountClick"
+                        Click="CloseClick"
                         Content="Закрыть"
                         >
 

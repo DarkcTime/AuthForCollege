@@ -23,5 +23,16 @@ namespace AuthForCollege.View
         {
             InitializeComponent();
         }
+
+        private void AuthClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void CloseClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown(); 
+        }
+
+
     }
 }
