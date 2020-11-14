@@ -76,6 +76,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BackEnd\Counter.cs" />
     <Compile Include="BackEnd\SharedClass.cs" />
     <Compile Include="Controller\ModelRepo.cs" />
     <Compile Include="Controller\UserRepo.cs" />

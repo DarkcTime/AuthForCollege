@@ -26,7 +26,7 @@
                 </Label>
             </Grid>
 
-            <TextBlock Name="txtTimer"></TextBlock>
+            <TextBlock Grid.Row="1" Name="txtTimer"></TextBlock>
              
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
@@ -58,7 +58,8 @@
                         Grid.Column="2"
                         Template="{StaticResource ButtonTemplate}"
                         Content="Войти"
-                        Click="AuthClick"></Button>
+                        Click="AuthClick"
+                        Name="btnAuth"></Button>
                 <Button Style="{StaticResource StyleButtonSmall}"
                         Template="{StaticResource ButtonTemplate}"
                         Grid.Column="1"
