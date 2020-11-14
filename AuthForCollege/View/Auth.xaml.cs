@@ -24,9 +24,7 @@ namespace AuthForCollege.View
     public partial class Auth : Window
     {
         private UserRepo userRepo = new UserRepo();
-
         private DispatcherTimer dispatcherTimer;
-
         private Counter Counter; 
 
         public Auth()
@@ -35,52 +33,75 @@ namespace AuthForCollege.View
             Counter = new Counter();
         }
 
+        #region UI Events
         private void AuthClick(object sender, RoutedEventArgs e)
         {
-            if (IsFieldsEmpty())
+            try
             {
-                SharedClass.MessageBoxWarning("Все поля должны быть заполнены");
-                return; 
-            }
-
-            if (userRepo.IsAuth(this.txtLogin.Text, this.txtPassword.Text))
-            {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                this.Close();
-            }
-            else
-            {
-                SharedClass.MessageBoxWarning($"Неправильный логин или пароль. Попыток до блокировки {3 - Counter.counter}");
-                if (!Counter.IsAddCount())
+                if (IsFieldsEmpty())
                 {
-                    blockMode();
+                    SharedClass.MessageBoxWarning("Все поля должны быть заполнены");
                     return;
-                }                               
+                }
+
+                if (userRepo.IsAuth(this.txtLogin.Text.Trim(), this.txtPassword.Text.Trim()))
+                {
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    this.Close();
+                }
+                else
+                {
+                    SharedClass.MessageBoxWarning($"Неправильный логин или пароль. Попыток до блокировки {3 - Counter.counter}");
+                    if (!Counter.IsAddCount())
+                    {
+                        blockMode();
+                        return;
+                    }
+                }
             }
+            catch(Exception ex)
+            {
+                SharedClass.MessageBoxError(ex);     
+            }
+          
 
         }
+
+        private void CloseClick(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
+
+        #endregion
+
+        #region CounterTrying
+        private void CreateTimer()
+        {
+            dispatcherTimer = new DispatcherTimer();
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+            dispatcherTimer.Tick += timerTick;
+            dispatcherTimer.Start();
+        }
         private void timerTick(object sender, EventArgs e)
-        {            
+        {
             setTextForBlock(Counter.numberSecond);
             if (!Counter.IsMinusSeconds()) startMode();
         }
 
         private void blockMode()
         {
-            IsEnabledElements(false);    
+            IsEnabledElements(false);
             CreateTimer();
-            setTextForBlock(60); 
+            setTextForBlock(60);
         }
-
         private void startMode()
         {
-            IsEnabledElements(true);      
+            IsEnabledElements(true);
             this.dispatcherTimer.Stop();
-            this.txtTimer.Text = string.Empty; 
+            this.txtTimer.Text = string.Empty;
 
         }
-
         private void IsEnabledElements(bool isEnabled)
         {
             this.txtLogin.IsEnabled = isEnabled;
@@ -91,26 +112,13 @@ namespace AuthForCollege.View
 
         private void setTextForBlock(int sec)
         {
-            this.txtTimer.Text = $"До снятия блокировки {sec}"; 
+            this.txtTimer.Text = $"До снятия блокировки {sec}";
         }
 
-
-        private void CreateTimer()
-        {
-            dispatcherTimer = new DispatcherTimer();
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
-            dispatcherTimer.Tick += timerTick;
-            dispatcherTimer.Start();
-        }
-        private void CloseClick(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown(); 
-        }
-
+        #endregion
         private bool IsFieldsEmpty()
         {
-            return string.IsNullOrWhiteSpace(this.txtLogin.Text) || string.IsNullOrWhiteSpace(this.txtPassword.Text); 
-            
+            return string.IsNullOrWhiteSpace(this.txtLogin.Text) || string.IsNullOrWhiteSpace(this.txtPassword.Text);             
         }
 
 

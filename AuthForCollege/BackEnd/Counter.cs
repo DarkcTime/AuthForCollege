@@ -15,7 +15,7 @@ namespace AuthForCollege.BackEnd
         public Counter()
         {
             counter = 0;
-            numberSecond = 5; 
+            numberSecond = 60; 
         }
 
         public bool IsAddCount()

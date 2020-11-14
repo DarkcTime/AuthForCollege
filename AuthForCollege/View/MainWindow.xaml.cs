@@ -12,7 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AuthForCollege.BackEnd;
 using AuthForCollege.Controller;
+using AuthForCollege.View;
 
 namespace AuthForCollege
 {
@@ -23,8 +25,16 @@ namespace AuthForCollege
     {
         public MainWindow()
         {
-            InitializeComponent();
-            SetAuthText();
+            try
+            {
+                InitializeComponent();
+                SetAuthText();
+            }
+            catch(Exception ex)
+            {
+                SharedClass.MessageBoxError(ex);
+            }
+           
 
         }
 
@@ -47,6 +57,13 @@ namespace AuthForCollege
             }
 
             this.txtAuth.Text = $"Вы успешно авторизированы как {role}"; 
+        }
+
+        private void BackClick(object sender, RoutedEventArgs e)
+        {
+            Auth auth = new Auth();
+            auth.Show();
+            this.Close();
         }
     }
 }
