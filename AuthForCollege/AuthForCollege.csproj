@@ -76,6 +76,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BackEnd\SharedClass.cs" />
+    <Compile Include="Controller\ModelRepo.cs" />
     <Compile Include="Controller\UserRepo.cs" />
     <Compile Include="Model\DataModel.cs" />
     <Compile Include="Model\Role.cs" />
@@ -115,9 +117,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BackEnd\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\user.png" />
   </ItemGroup>
